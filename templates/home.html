@@ -1,3 +1,19 @@
-THIS IS HOME!!
-<p>{{user.get_username}}</p>
-<a href="{% url 'logout'%}">ログアウト</a>
+{% extends 'base.html' %}
+
+<h1>ホーム</h1>
+
+{% block content %}
+<p>{{user.username}}さん、こんにちは</p>
+
+<div class="container">
+    {% for item in object_list %}
+    <div class="alert alert-primary" role="alert">
+        <p>@{{item.author}}</p>
+        <p>{{ item.text}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+
+<p><a href="{% url 'logout'%}">ログアウト</a></p>
+{% endblock content %}
