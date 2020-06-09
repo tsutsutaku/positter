@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import Post, Like, Profile
+from django.views.generic import CreateView
 
 # Create your views here.
 
@@ -62,10 +63,16 @@ def indexfunc(request):
         return render(request, 'index.html')
 
 
+@login_required()
 def homefunc(request):
     object_list = Post.objects.all()
     if request.user.is_authenticated:
-        return render(request, 'home.html', {'object_list': object_list})
+        user = request.user
+        profile = Profile.objects.get(user=user)
+        return render(request, 'home.html', {
+            'object_list': object_list,
+            'profile': profile
+        })
 
     else:
         return redirect('index')
@@ -74,3 +81,19 @@ def homefunc(request):
 def logoutfunc(request):
     logout(request)
     return redirect('home')
+
+
+def createfunc(request):
+    if request.method == 'POST':
+        text2 = request.POST['text']
+
+        user = request.user
+        Post.objects.create(text=text2, author=user)
+
+        return redirect('home')
+
+    if request.user.is_authenticated:
+        return render(request, 'create.html')
+
+    else:
+        return redirect('signup')

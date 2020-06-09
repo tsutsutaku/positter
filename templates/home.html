@@ -3,17 +3,18 @@
 <h1>ホーム</h1>
 
 {% block content %}
-<p>{{user.username}}さん、こんにちは</p>
+<p>{{profile.display_name}}さん、こんにちは</p>
 
 <div class="container">
     {% for item in object_list %}
     <div class="alert alert-primary" role="alert">
-        <p>@{{item.author}}</p>
+        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</p>
+
         <p>{{ item.text}}</p>
     </div>
     {% endfor %}
 </div>
 
-
+<a href="{% url 'create'%}">投稿する</a>
 <p><a href="{% url 'logout'%}">ログアウト</a></p>
 {% endblock content %}

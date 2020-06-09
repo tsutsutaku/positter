@@ -1,12 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 # Create your models here.
 class Post(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
-    positive_score = models.IntegerField()
+    positive_score = models.IntegerField(null=True, )
 
     def __str__(self):
         return str(self.id)
@@ -42,3 +43,4 @@ class Profile(models.Model):
                                 on_delete=models.CASCADE,
                                 related_name="profile")
     display_name = models.CharField(max_length=20)
+    birthday = models.DateField(auto_now=False, null=True, blank=True)
