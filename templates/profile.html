@@ -4,6 +4,16 @@
 
 <b>{{user.username}} </b>
 
+<div class="container">
+    {% for item in object_list %}
+    <div class="alert alert-primary" role="alert">
+        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</a></p>
+        </p>
 
+        <p>{{ item.text}}</p>
+    </div>
+    {% endfor %}
+</div>
 
+<a href="{% url 'home'%}">ホームに戻る</a>
 {% endblock content %}

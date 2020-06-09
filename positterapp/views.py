@@ -113,4 +113,8 @@ def createfunc(request):
 
 def profilefunc(request, username):
     user = get_object_or_404(User, username=username)
-    return render(request, 'profile.html', {'user': user})
+    object_list = Post.objects.filter(author=user)
+    return render(request, 'profile.html', {
+        'user': user,
+        'object_list': object_list
+    })
