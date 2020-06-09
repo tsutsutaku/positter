@@ -9,12 +9,21 @@ from django.views import generic
 from .models import Post, Like, Profile
 from django.views.generic import CreateView
 
+import re
 # Create your views here.
 
 
+def checkAlnum(word):
+    alnum = re.compile(r'^[a-zA-Z0-9]+$')
+    result = alnum.match(word) is not None
+    return result
+
+
 def signupfunc(request):
+
     if request.user.is_authenticated:
         return redirect('home')
+
     if request.method == 'POST':
         username2 = request.POST['username']
         password2 = request.POST['password']
@@ -24,6 +33,11 @@ def signupfunc(request):
             User.objects.get(username=username2)
             return render(request, 'signup.html', {'error': 'このユーザーは登録されています'})
         except:
+            if not checkAlnum(username2):
+                return render(
+                    request, 'signup.html',
+                    {'validate_error': '無効なidです。idには半角英数字のみ使用してください'})
+
             user = User.objects.create_user(username2, '', password2)
             login(
                 request,
@@ -63,7 +77,6 @@ def indexfunc(request):
         return render(request, 'index.html')
 
 
-@login_required()
 def homefunc(request):
     object_list = Post.objects.all()
     if request.user.is_authenticated:

@@ -11,6 +11,9 @@
     {% if error %}
     {{ error }}
     {% endif %}
+    {% if validate_error %}
+    {{ validate_error }}
+    {% endif %}
     <label for="text" class="sr-only">Email address</label>
     <input type="text" id="inputEmail" class="form-control" name="username" placeholder="username" required autofocus>
     <label for="text" class="sr-only">Display name</label>

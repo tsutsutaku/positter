@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if user.is_authenticated %}
+
 <form action='' method='POST' enctype="multipart/form-data">{% csrf_token %}
     <p>posieet:<input type="text" name='text'>
         <p />
@@ -10,7 +10,5 @@
 
         <input type="submit" value="作成する">
 </form>
-{% else %}
-ログインしてください
-{% endif %}
+
 {% endblock content %}
