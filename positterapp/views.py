@@ -3,11 +3,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.http import HttpResponse
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import Post, Like, Profile
-from django.views.generic import CreateView
 
 import re
 # Create your views here.
@@ -110,3 +109,8 @@ def createfunc(request):
 
     else:
         return redirect('signup')
+
+
+def profilefunc(request, username):
+    user = get_object_or_404(User, username=username)
+    return render(request, 'profile.html', {'user': user})

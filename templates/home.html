@@ -15,6 +15,7 @@
     {% endfor %}
 </div>
 
+<p><a href="{% url 'profile' user.username %}">プロフィール</a></p>
 <a href="{% url 'create'%}">投稿する</a>
 <p><a href="{% url 'logout'%}">ログアウト</a></p>
 {% endblock content %}
