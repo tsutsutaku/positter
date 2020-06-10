@@ -7,7 +7,7 @@
 <div class="container">
     {% for item in object_list %}
     <div class="alert alert-primary" role="alert">
-        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</a></p>
+        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</a>   {{item.created_at}}</p>
         </p>
 
         <p>{{ item.text}}</p>

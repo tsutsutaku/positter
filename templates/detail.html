@@ -6,7 +6,7 @@
 <div class="container">
     
     <div class="alert alert-primary" role="alert">
-        <p><b>{{object.author.profile.display_name}}</b><a href="{% url 'profile' object.author %}">@{{object.author}}</a></p>
+        <p><b>{{object.author.profile.display_name}}</b><a href="{% url 'profile' object.author %}">@{{object.author}}</a>   {{object.created_at}}</p>
         <p>{{ object.text }}</p>
         <button type="button" class="btn btn-danger">いいね！</button>
     </div>

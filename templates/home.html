@@ -11,8 +11,7 @@
 <div class="container">
     {% for item in object_list %}
     <div class="alert alert-primary" role="alert">
-        <p><b>{{item.author.profile.display_name}} </b><a href="{% url 'profile' item.author %}">@{{item.author}}</a>
-        </p>
+        <p><b>{{item.author.profile.display_name}} </b><a href="{% url 'profile' item.author %}">@{{item.author}}  </a> {{item.created_at}}</p>
 
         <p>{{ item.text}}</p>
         <button type="button" class="btn btn-danger">いいね！</button>
