@@ -82,7 +82,7 @@ def homefunc(request):
         user = request.user
         profile = Profile.objects.get(user=user)
         return render(request, 'home.html', {
-            'object_list': object_list,
+            'object_list': object_list[::-1],
             'profile': profile
         })
 
@@ -116,7 +116,7 @@ def profilefunc(request, username):
     object_list = Post.objects.filter(author=user)
     return render(request, 'profile.html', {
         'user': user,
-        'object_list': object_list
+        'object_list': object_list[::-1]
     })
 
 
