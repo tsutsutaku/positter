@@ -1,20 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<b>{{user.username}} </b>
+<p>ツイート詳細</p>
 
 <div class="container">
-    {% for item in object_list %}
+    
     <div class="alert alert-primary" role="alert">
-        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</a></p>
-        </p>
-
-        <p>{{ item.text}}</p>
+        <p><b>{{object.author.profile.display_name}}</b><a href="{% url 'profile' object.author %}">@{{object.author}}</a></p>
+        <p>{{ object.text }}</p>
         <button type="button" class="btn btn-danger">いいね！</button>
-        <a href="{% url 'detail' item.pk %}">詳細</a>
     </div>
-    {% endfor %}
+    
 </div>
 
 <a href="{% url 'home'%}">ホームに戻る</a>

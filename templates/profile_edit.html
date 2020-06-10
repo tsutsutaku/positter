@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action='' method='POST' enctype="multipart/form-data">{% csrf_token %}
+    <p>posieet:<input type="text" name='text'>
+        <p />
+
+        <input type="hidden" name="author" value="{{ user.username }}">
+
+        <input type="submit" value="作成する">
+</form>
+
+{% endblock content %}

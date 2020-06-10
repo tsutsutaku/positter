@@ -118,3 +118,8 @@ def profilefunc(request, username):
         'user': user,
         'object_list': object_list
     })
+
+
+def detailfunc(request, pk):
+    object=Post.objects.get(pk=pk)
+    return render(request, 'detail.html', {'object':object})
