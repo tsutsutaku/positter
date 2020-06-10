@@ -8,14 +8,15 @@
 <a href="{% url 'create'%}">投稿する</a>
 <p><a href="{% url 'logout'%}">ログアウト</a></p>
 
+<a href="/admin/"">管理画面</a>
+
 <div class="container">
     {% for item in object_list %}
     <div class="alert alert-primary" role="alert">
         <p><b>{{item.author.profile.display_name}} </b><a href="{% url 'profile' item.author %}">@{{item.author}}  </a> {{item.created_at}}</p>
 
         <p>{{ item.text}}</p>
-        <button type="button" class="btn btn-danger">いいね！</button>
-        <a href="{% url 'detail' item.pk %}">詳細</a>
+        <a href="{% url 'like' item.pk %}">いいね {{item.like_num}}</a>
     </div>
     {% endfor %}
 </div>

@@ -10,18 +10,21 @@ class Post(models.Model):
     text = models.TextField()
     positive_score = models.IntegerField(null=True)
     created_at = models.DateTimeField(default=timezone.now)
+    like_num = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return str(self.id)
 
 
 class Like(models.Model):
-    user_id = models.ForeignKey(User,
-                                verbose_name='id',
+    user = models.ForeignKey(User,
+                                verbose_name='user',
                                 on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post,
-                                verbose_name='id',
+    post = models.ForeignKey(Post,
+                                verbose_name='posieet',
                                 on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return str(self.id)

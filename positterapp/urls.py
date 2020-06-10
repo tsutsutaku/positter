@@ -10,4 +10,5 @@ urlpatterns = [
     path('create/', views.createfunc, name='create'),
     path('profile/<str:username>/', views.profilefunc, name='profile'),
     path('detail/<int:pk>/', views.detailfunc, name='detail'),
+    path('like/<int:pk>/', views.likefunc, name='like')
 ]

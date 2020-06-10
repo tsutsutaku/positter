@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 from .models import Post, Like, Profile
+from rest_framework.response import Response
 
 import re
 # Create your views here.
@@ -81,6 +82,7 @@ def homefunc(request):
     if request.user.is_authenticated:
         user = request.user
         profile = Profile.objects.get(user=user)
+
         return render(request, 'home.html', {
             'object_list': object_list[::-1],
             'profile': profile
@@ -123,3 +125,29 @@ def profilefunc(request, username):
 def detailfunc(request, pk):
     object=Post.objects.get(pk=pk)
     return render(request, 'detail.html', {'object':object})
+
+
+def likefunc(request, pk):
+    post_id = Post.objects.get(pk=pk)
+    object_list = Post.objects.all()
+    user = request.user
+    profile = Profile.objects.get(user=user)
+
+    if Like.objects.filter(user=request.user, post=pk).count() == 0:
+
+        Like.objects.create(user=user, post=post_id)
+        post_id.like_num += 1
+        post_id.save()
+    
+    else:
+        Like.objects.filter(user=user, post=post_id).delete()
+        post_id.like_num -= 1
+        post_id.save()
+    
+    data = {
+        'object_list': object_list[::-1],
+            'profile': profile
+    }
+
+
+    return Response(data)
