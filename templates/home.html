@@ -11,15 +11,34 @@
 <a href="/admin/"">管理画面</a>
 
 <div class="container">
-    {% for item in object_list %}
+    {% for item, tf in object_list %}
     <div class="alert alert-primary" role="alert">
         <p><b>{{item.author.profile.display_name}} </b><a href="{% url 'profile' item.author %}">@{{item.author}}  </a> {{item.created_at}}</p>
 
         <p>{{ item.text}}</p>
-        <a href="{% url 'like' item.pk %}">いいね {{item.like_num}}</a>
+        {% if tf %}
+        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}' style="color: red;">いいね</a>
+        <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
+        {% else %}
+        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}'>いいね</a>
+        <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
+        {% endif %}
+
     </div>
+
     {% endfor %}
+
+    <script>
+        window.onpageshow = function(event) {
+	if (event.persisted) {
+		 window.location.reload();
+	}
+};
+    </script>
+    
 </div>
+
+
 
 
 {% endblock content %}

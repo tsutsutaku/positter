@@ -5,17 +5,31 @@
 <b>{{user.username}} </b>
 
 <div class="container">
-    {% for item in object_list %}
+    {% for item, tf in object_list %}
     <div class="alert alert-primary" role="alert">
-        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}</a>   {{item.created_at}}</p>
-        </p>
+        <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}   {{item.created_at}}</p>
 
         <p>{{ item.text}}</p>
-        <button type="button" class="btn btn-danger">いいね！</button>
-        <a href="{% url 'detail' item.pk %}">詳細</a>
+        {% if tf %}
+        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}' style="color: red;">いいね</a>
+        <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
+        {% else %}
+        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}'>いいね</a>
+        <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
+        {% endif %}
+
     </div>
+
     {% endfor %}
 </div>
 
 <a href="{% url 'home'%}">ホームに戻る</a>
+
+<script>
+    window.onpageshow = function(event) {
+if (event.persisted) {
+     window.location.reload();
+}
+};
+</script>
 {% endblock content %}

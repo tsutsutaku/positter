@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -83,9 +83,23 @@ def homefunc(request):
         user = request.user
         profile = Profile.objects.get(user=user)
 
+        #ユーザーがいいねしたかどうか
+        like_tf = []
+        for i in object_list[::-1]:
+            if Like.objects.filter(user=user, post=i).count() == 0:
+                like_tf.append(False)
+            
+            else:
+                like_tf.append(True)
+        
+        zip_l = zip(object_list[::-1], like_tf)
+    
+        
+        
         return render(request, 'home.html', {
-            'object_list': object_list[::-1],
-            'profile': profile
+            'object_list': zip_l,
+            'profile': profile,
+            
         })
 
     else:
@@ -116,9 +130,21 @@ def createfunc(request):
 def profilefunc(request, username):
     user = get_object_or_404(User, username=username)
     object_list = Post.objects.filter(author=user)
+    logined_user = request.user
+
+    like_tf = []
+    for i in object_list[::-1]:
+        if Like.objects.filter(user=logined_user, post=i).count() == 0:
+            like_tf.append(False)
+            
+        else:
+            like_tf.append(True)
+        
+    zip_l = zip(object_list[::-1], like_tf)
+
     return render(request, 'profile.html', {
         'user': user,
-        'object_list': object_list[::-1]
+        'object_list': zip_l
     })
 
 
@@ -128,26 +154,27 @@ def detailfunc(request, pk):
 
 
 def likefunc(request, pk):
-    post_id = Post.objects.get(pk=pk)
-    object_list = Post.objects.all()
-    user = request.user
-    profile = Profile.objects.get(user=user)
+    if request.method == 'POST':
+        post_id = Post.objects.get(pk=pk)
+        object_list = Post.objects.all()
+        user = request.user
+        profile = Profile.objects.get(user=user)
 
-    if Like.objects.filter(user=request.user, post=pk).count() == 0:
+        if Like.objects.filter(user=request.user, post=pk).count() == 0:
 
-        Like.objects.create(user=user, post=post_id)
-        post_id.like_num += 1
-        post_id.save()
-    
-    else:
-        Like.objects.filter(user=user, post=post_id).delete()
-        post_id.like_num -= 1
-        post_id.save()
-    
-    data = {
-        'object_list': object_list[::-1],
-            'profile': profile
-    }
+            Like.objects.create(user=user, post=post_id)
+            post_id.like_num += 1
+            post_id.save()
+
+        else:
+            Like.objects.filter(user=user, post=post_id).delete()
+            post_id.like_num -= 1
+            post_id.save()
+
+        data = {
+            'object_list': object_list[::-1],
+                'profile': profile
+        }
 
 
-    return Response(data)
+        return HttpResponse(data)
