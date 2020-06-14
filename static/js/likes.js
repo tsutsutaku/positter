@@ -1,7 +1,7 @@
 
 
 
-function likes(pk, tf) {
+function likes(pk) {
 
     var color = document.getElementById(`like_${pk}`).style.color;
 
@@ -20,3 +20,4 @@ function likes(pk, tf) {
     xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
     xhr.send(); 
 }
+

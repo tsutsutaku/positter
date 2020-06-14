@@ -3,6 +3,9 @@
 {% block content %}
 
 <b>{{user.username}} </b>
+{% if not user.username == logined_user.username %}
+<a role="button" onclick="follows('{{ user.username }}')" id='follow'>フォローする</a>
+{% endif %}
 
 <div class="container">
     {% for item, tf in object_list %}
@@ -25,11 +28,5 @@
 
 <a href="{% url 'home'%}">ホームに戻る</a>
 
-<script>
-    window.onpageshow = function(event) {
-if (event.persisted) {
-     window.location.reload();
-}
-};
-</script>
+
 {% endblock content %}

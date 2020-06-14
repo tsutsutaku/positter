@@ -6,7 +6,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import redirect, render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
-from .models import Post, Like, Profile
+from .models import Post, Like, Profile, Follow
 from rest_framework.response import Response
 
 import re
@@ -128,6 +128,7 @@ def createfunc(request):
 
 
 def profilefunc(request, username):
+    loginned_user = request.user
     user = get_object_or_404(User, username=username)
     object_list = Post.objects.filter(author=user)
     logined_user = request.user
@@ -144,7 +145,8 @@ def profilefunc(request, username):
 
     return render(request, 'profile.html', {
         'user': user,
-        'object_list': zip_l
+        'object_list': zip_l,
+        'logined_user': logined_user,
     })
 
 
@@ -178,3 +180,46 @@ def likefunc(request, pk):
 
 
         return HttpResponse(data)
+
+
+def followfunc(request, follow_id):
+
+    username = request.user
+
+    if Follow.objects.filter(user=username, follow_id=follow_id).count() == 0:
+        is_following = False
+    
+    else:
+        is_following = True
+    
+    if is_following:
+        Follow.objects.filter(user=username, follow_id=follow_id).delete()
+    
+    else:
+        Follow.objects.create(user=username, follow_id=follow_id)
+
+
+    
+    user = get_object_or_404(User, username=username)
+    object_list = Post.objects.filter(author=user)
+    
+
+    like_tf = []
+    for i in object_list[::-1]:
+        if Like.objects.filter(user=username, post=i).count() == 0:
+            like_tf.append(False)
+            
+        else:
+            like_tf.append(True)
+
+        
+    zip_l = zip(object_list[::-1], like_tf)
+
+    data = {
+        'user': user,
+        'object_list': zip_l,
+        'logined_user': username,
+    }
+
+    return HttpResponse(data)
+

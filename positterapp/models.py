@@ -49,3 +49,11 @@ class Profile(models.Model):
                                 related_name="profile")
     display_name = models.CharField(max_length=20)
     birthday = models.DateField(auto_now=False, null=True, blank=True)
+
+
+class Follow(models.Model):
+    user = models.ForeignKey(User,
+                        verbose_name='user',
+                        on_delete=models.CASCADE)
+    
+    follow_id = models.CharField(max_length=30)

@@ -17,10 +17,10 @@
 
         <p>{{ item.text}}</p>
         {% if tf %}
-        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}' style="color: red;">いいね</a>
+        <a role="button" onclick="likes('{{ item.pk }}')" id='like_{{item.pk}}' style="color: red;">いいね</a>
         <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
         {% else %}
-        <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}'>いいね</a>
+        <a role="button" onclick="likes('{{ item.pk }}')" id='like_{{item.pk}}'>いいね</a>
         <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
         {% endif %}
 
@@ -28,13 +28,6 @@
 
     {% endfor %}
 
-    <script>
-        window.onpageshow = function(event) {
-	if (event.persisted) {
-		 window.location.reload();
-	}
-};
-    </script>
     
 </div>
 
