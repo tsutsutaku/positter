@@ -1,17 +1,29 @@
 {% extends 'base.html' %}
 
+
+
 {% block content %}
 
+
+
+
 <b>{{user.username}} </b>
+
+
+<p>フォロー中: <span id="followed">{{ followed_n }}   </span>フォロワー: <span id="follower">{{ follower_n }}</span></p>
 {% if not user.username == logined_user.username %}
-<a role="button" onclick="follows('{{ user.username }}')" id='follow'>フォローする</a>
+{% if is_following %}
+<button onclick="follows('{{ user.username }}')" id='follow_button'>フォロー中</button>
+{% endif %}
+{% if not is_following %}
+<button onclick="follows('{{ user.username }}')" id='follow_button'>フォローする</button>
+{% endif %}
 {% endif %}
 
 <div class="container">
     {% for item, tf in object_list %}
     <div class="alert alert-primary" role="alert">
         <p><b>{{item.author.profile.display_name}} </b>@{{item.author}}   {{item.created_at}}</p>
-
         <p>{{ item.text}}</p>
         {% if tf %}
         <a role="button" onclick="likes('{{ item.pk }}', '{{tf}}')" id='like_{{item.pk}}' style="color: red;">いいね</a>

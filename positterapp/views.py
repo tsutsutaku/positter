@@ -49,6 +49,7 @@ def signupfunc(request):
     return render(request, 'signup.html')
 
 
+
 def loginfunc(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -69,12 +70,14 @@ def loginfunc(request):
     return render(request, 'login.html')
 
 
+
 def indexfunc(request):
     if request.user.is_authenticated:
         return redirect('home')
 
     else:
         return render(request, 'index.html')
+
 
 
 def homefunc(request):
@@ -100,15 +103,19 @@ def homefunc(request):
             'object_list': zip_l,
             'profile': profile,
             
+            
         })
 
     else:
         return redirect('index')
 
 
+
 def logoutfunc(request):
     logout(request)
     return redirect('home')
+
+
 
 
 def createfunc(request):
@@ -127,11 +134,17 @@ def createfunc(request):
         return redirect('signup')
 
 
+
 def profilefunc(request, username):
-    loginned_user = request.user
     user = get_object_or_404(User, username=username)
     object_list = Post.objects.filter(author=user)
     logined_user = request.user
+
+    if Follow.objects.filter(user=logined_user, follow_id=user).count() == 0:
+        is_following = False
+    
+    else:
+        is_following = True
 
     like_tf = []
     for i in object_list[::-1]:
@@ -143,16 +156,24 @@ def profilefunc(request, username):
         
     zip_l = zip(object_list[::-1], like_tf)
 
+    followed_n = Follow.objects.filter(user=user).count()
+    follower_n = Follow.objects.filter(follow_id=user).count()
+
     return render(request, 'profile.html', {
         'user': user,
         'object_list': zip_l,
         'logined_user': logined_user,
+         'follower_n': follower_n,
+        'followed_n': followed_n,
+        'is_following': is_following,
     })
 
 
 def detailfunc(request, pk):
     object=Post.objects.get(pk=pk)
     return render(request, 'detail.html', {'object':object})
+
+
 
 
 def likefunc(request, pk):
@@ -182,6 +203,8 @@ def likefunc(request, pk):
         return HttpResponse(data)
 
 
+
+
 def followfunc(request, follow_id):
 
     username = request.user
@@ -205,6 +228,7 @@ def followfunc(request, follow_id):
     
 
     like_tf = []
+
     for i in object_list[::-1]:
         if Like.objects.filter(user=username, post=i).count() == 0:
             like_tf.append(False)
@@ -215,10 +239,19 @@ def followfunc(request, follow_id):
         
     zip_l = zip(object_list[::-1], like_tf)
 
+    followed_n = Follow.objects.filter(user=user).count()
+    follower_n = Follow.objects.filter(follow_id=user).count()
+
+   
+
+
     data = {
         'user': user,
         'object_list': zip_l,
         'logined_user': username,
+        'follower_n': follower_n,
+        'followed_n': followed_n,
+        'is_following': is_following,
     }
 
     return HttpResponse(data)
