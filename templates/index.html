@@ -1,3 +1,55 @@
+<<<<<<< HEAD
 <h1>Positter</h1>
 <a href="{% url 'login'%}">ログイン</a>
 <a href="{% url 'signup'%}">サインアップ</a>
+=======
+{% extends 'base.html' %}
+{% load static %}
+
+
+
+{% block customcss %}
+{% endblock customcss %}
+
+{% block content %}
+
+<div class="index">
+<div class="left">
+    <div class="left-content">
+        <div>
+            <i class="fas fa-search"></i>
+            <h3 class="left-content-heading">興味があることを探そう</h3>
+        </div>
+        <div>
+            <i class="fas fa-user-friends"></i>
+            <h3 class="left-content-heading">みんなが話している話題を見つけよう</h3>
+        </div>
+        <div>
+            <i class="fas fa-comment"></i>
+            <h3 class="left-content-heading">会話に加わろう</h3>
+        </div>
+    </div>
+</div>
+<div class="right">
+    <div class="right-content">
+        <div class="middle-content">
+            <i class="fas fa-dove"></i>
+            <h1>世界で何が起きているか見つけましょう</h1>
+            <h4>Positterに加わりましょう</h4>
+            <button type="button" class="sign-up" onclick="location.href=`{% url 'signup' %}`">Sign Up</button>
+            <button type="button" class="log-in" onclick="location.href=`{% url 'login' %}`">Log In</button>
+        </div>
+    </div>
+</div>
+<footer class="footer">
+    <ul>
+      <li>
+    <i class="fab fa-github fa-3x github-color"></i>
+      <a href="https://github.com/tsutsutaku/positter">GitHub</a>
+      </li>
+    </ul>
+  </footer>
+  
+</div>
+{% endblock content %}
+>>>>>>> make index UI

@@ -8,7 +8,17 @@
     <div class="alert alert-primary" role="alert">
         <p><b>{{object.author.profile.display_name}}</b><a href="{% url 'profile' object.author %}">@{{object.author}}</a>   {{object.created_at}}</p>
         <p>{{ object.text }}</p>
+<<<<<<< HEAD
         <button type="button" class="btn btn-danger">いいね！</button>
+=======
+        {% if tf %}
+        <a role="button" onclick="likes('{{ object.pk }}')" id='like_{{object.pk}}' style="color: red;">いいね</a>
+        <span id="like_num_{{object.pk}}">{{ object.like_num }}</span>
+        {% else %}
+        <a role="button" onclick="likes('{{ object.pk }}')" id='like_{{object.pk}}'>いいね</a>
+        <span id="like_num_{{object.pk}}">{{ object.like_num }}</span>
+        {% endif %}
+>>>>>>> make index UI
     </div>
     
 </div>
