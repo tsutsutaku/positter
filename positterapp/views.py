@@ -46,10 +46,6 @@ def signupfunc(request):
             Profile.objects.create(display_name=displayname, user=user)
             user.save()
             return redirect('login')
-<<<<<<< HEAD
-=======
-            
->>>>>>> make index UI
     return render(request, 'signup.html')
 
 
@@ -143,10 +139,6 @@ def profilefunc(request, username):
     user = get_object_or_404(User, username=username)
     object_list = Post.objects.filter(author=user)
     logined_user = request.user
-<<<<<<< HEAD
-=======
-    
->>>>>>> make index UI
 
     if Follow.objects.filter(user=logined_user, follow_id=user).count() == 0:
         is_following = False
@@ -179,20 +171,7 @@ def profilefunc(request, username):
 
 def detailfunc(request, pk):
     object=Post.objects.get(pk=pk)
-<<<<<<< HEAD
     return render(request, 'detail.html', {'object':object})
-=======
-    user = request.user
-
-    if Like.objects.filter(user=user, post=pk).count() == 0:
-        tf = False
-    
-    else:
-        tf = True
-
-
-    return render(request, 'detail.html', {'object':object, 'tf':tf})
->>>>>>> make index UI
 
 
 

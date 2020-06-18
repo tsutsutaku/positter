@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 from django.urls import path, include
-=======
-from django.urls import path
->>>>>>> make index UI
 from . import views
 
 urlpatterns = [
