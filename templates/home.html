@@ -15,11 +15,7 @@
     <div class="alert alert-primary" role="alert">
         <p><b>{{item.author.profile.display_name}} </b><a href="{% url 'profile' item.author %}">@{{item.author}}  </a> {{item.created_at}}</p>
 
-<<<<<<< HEAD
         <p>{{ item.text}}</p>
-=======
-        <p><a href="{% url 'detail' item.pk %}">{{ item.text}}</a></p>
->>>>>>> make index UI
         {% if tf %}
         <a role="button" onclick="likes('{{ item.pk }}')" id='like_{{item.pk}}' style="color: red;">いいね</a>
         <span id="like_num_{{item.pk}}">{{ item.like_num }}</span>
