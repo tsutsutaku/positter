@@ -51,10 +51,6 @@ class Profile(models.Model):
     birthday = models.DateField(auto_now=False, null=True, blank=True)
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> make index UI
 class Follow(models.Model):
     user = models.ForeignKey(User,
                         verbose_name='user',
